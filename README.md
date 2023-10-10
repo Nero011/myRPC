@@ -1,1 +1,3 @@
 # myRPC
+
+一个用于rpc服务的框架，使用protobuf作为序列化工具，使用zookeeper作为服务管理工具，使用muduo网络库作为网络通信工具。
