@@ -4,15 +4,21 @@
 //
 
 #pragma once
+
 #include <MyrpcConfig.h>
 
 class MyrpcApplication {
 public:
     static void init(int argc, char **argv);
-    static MyrpcApplication& getInstance();
+
+    static MyrpcApplication &getInstance();
+
+    MyrpcConfig &getConfig() { return m_config; }
 
 private:
+
     MyrpcApplication();
+
     MyrpcApplication(const MyrpcApplication &) = delete;
 
     static MyrpcConfig m_config;

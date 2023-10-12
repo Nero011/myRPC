@@ -60,3 +60,4 @@ std::string MyrpcConfig::Load(std::string key) {
     return "";
 
 }
+
