@@ -17,7 +17,7 @@ public:
     {
         std::cout << "doing local service: Login" << std::endl;
         std::cout << "name:" << name << " pwd:" << pwd << std::endl;
-        return false;
+        return true;
     }
 
     bool Register(uint32_t id, std::string name, std::string pwd)

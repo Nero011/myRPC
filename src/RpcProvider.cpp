@@ -56,7 +56,7 @@ void RpcProvider::OnMessage(const muduo::net::TcpConnectionPtr &conn, muduo::net
     std::string recv_buf = buffer->retrieveAllAsString(); // 接受所有字符
 
     uint32_t header_size;
-    recv_buf.copy((char *) header_size, 4); // 将收到数据的前四个字节解析为请求头长度
+    recv_buf.copy((char *) &header_size, 4); // 将收到数据的前四个字节解析为请求头长度
 
     // 反序列化请求
     myrpc::RpcHeader rpcHeader;
@@ -111,5 +111,15 @@ void RpcProvider::OnMessage(const muduo::net::TcpConnectionPtr &conn, muduo::net
 }
 
 void RpcProvider::SendRpcResponse(const muduo::net::TcpConnectionPtr &conn, google::protobuf::Message *response) {
-
+    std::string response_str;
+    if (response->SerializeToString(&response_str)) // response进行序列化
+    {
+        // 序列化成功后，通过网络把rpc方法执行的结果发送会rpc的调用方
+        conn->send(response_str);
+    }
+    else
+    {
+        std::cout << "serialize response_str error!" << std::endl;
+    }
+    conn->shutdown(); // 模拟http的短链接服务，由rpcprovider主动断开连接
 }
